@@ -1,0 +1,44 @@
+version: '2'
+services:
+  mediawiki:
+    image: bfritscher/mediawiki
+    ports:
+     - "80:80"
+    volumes:
+      - ./data/mediawiki/images:/var/www/html/images
+      - ./data/mediawiki/conf:/conf
+    depends_on:
+      - mysql
+      - mediawiki-node-services
+    environment:
+      - MEDIAWIKI_SITE_SERVER=//localhost:88
+      - MEDIAWIKI_SITE_NAME=MediaWiki
+      - MEDIAWIKI_SITE_LANG=en
+      - MEDIAWIKI_ADMIN_USER=admin
+      - MEDIAWIKI_ADMIN_PASS=test
+      - MEDIAWIKI_UPDATE=true
+      - MEDIAWIKI_DB_USER=root
+      - MEDIAWIKI_DB_HOST=mysql
+      - MEDIAWIKI_DB_PORT=3306
+      - MEDIAWIKI_DB_PASSWORD=password
+      - MEDIAWIKI_RESTBASE_URL=http://mediawiki-node-services:7231/localhost/v1
+
+  mysql:
+    restart: always
+    image: mariadb
+    volumes:
+      - mysql-data:/var/lib/mysql:rw
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+  mediawiki-node-services:
+    restart: always
+    image: wikimedia/mediawiki-node-services
+    volumes:
+      - mediawiki-node-services-data:/data
+    environment:
+      - MEDIAWIKI_API_URL=http://mediawiki/api.php
+volumes:
+  mysql-data:
+    driver: local
+  mediawiki-node-services-data:
+    driver: local
