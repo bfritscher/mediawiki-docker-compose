@@ -60,6 +60,7 @@ RUN echo "Include /etc/apache2/mediawiki.conf" >> /etc/apache2/apache2.conf
 COPY conf /conf_default
 RUN mkdir /conf
 COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 EXPOSE 80 443
 VOLUME ["/var/www/html/images", "/conf"]

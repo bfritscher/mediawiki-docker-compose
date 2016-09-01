@@ -1,7 +1,8 @@
 version: '2'
 services:
   mediawiki:
-    image: bfritscher/mediawiki
+    restart: always
+    image: bfritscher/mediawiki-docker
     ports:
      - "80:80"
     volumes:
