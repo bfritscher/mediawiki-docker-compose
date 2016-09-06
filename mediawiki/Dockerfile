@@ -54,7 +54,7 @@ RUN cd /var/www/html \
 
 
 # Configure
-COPY php.ini /etc/php7/apache2/conf.d/mediawiki.ini
+COPY php.ini /etc/php/7.0/apache2/conf.d/mediawiki.ini
 COPY apache/mediawiki.conf /etc/apache2/
 RUN echo "Include /etc/apache2/mediawiki.conf" >> /etc/apache2/apache2.conf
 COPY conf /conf_default
